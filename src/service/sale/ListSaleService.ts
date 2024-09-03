@@ -18,7 +18,7 @@ class ListSaleService{
                 value:"5,00"
             }
         ]
-        
+        return sales
     }
 }
 export {ListSaleService}
