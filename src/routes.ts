@@ -35,8 +35,6 @@ const listUsersController  = new ListUserController();
 const updateUserController  = new UpdateUserController();
 const deleteUserController  = new DeleteUserController();
 
-router.post("/login", authenticationUserController.handle)
-router.use(EnsureAuthenticated);
 
 const createCategoriesController  = new CreateCategoriesController();
 const listCategoriesController  = new ListCategoriesController();
@@ -62,6 +60,8 @@ router.post("/users", createUserController.handle);
 router.get("/users", listUsersController.handle);
 router.put("/users/:id", updateUserController.handle);
 router.delete("/users/:id", deleteUserController.handle);
+
+router.post("/login", authenticationUserController.handle)
 
 
 router.post("/categories", createCategoriesController.handle);
