@@ -24,19 +24,19 @@ import { ListClientController } from "./controller/Client/ListClientController";
 import { UpdateClientController } from "./controller/Client/UpdateClientController";
 import { DeleteClientController } from "./controller/Client/DeleteClientController";
 import { AuthenticationUserController } from "./controller/autentication/AuthenticationController";
-
+import { EnsureAuthenticated } from "./middleware/ensureAutenticated";
 const router = Router();
 
 
 
 const authenticationUserController = new AuthenticationUserController();
-
 const createUserController  = new CreateUserController();
 const listUsersController  = new ListUserController();
 const updateUserController  = new UpdateUserController();
 const deleteUserController  = new DeleteUserController();
 
 router.post("/login", authenticationUserController.handle)
+router.use(EnsureAuthenticated);
 
 const createCategoriesController  = new CreateCategoriesController();
 const listCategoriesController  = new ListCategoriesController();
