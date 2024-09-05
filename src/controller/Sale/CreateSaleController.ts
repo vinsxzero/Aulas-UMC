@@ -16,8 +16,8 @@ class CreateSaleController{
             quantity:quantity,
             value:value
         }
-        
-        return response.json("Registro incluído com sucesso!")
+
+        return response.json({message: "Registro incluído com sucesso!"})
     }
 }
 export {CreateSaleController}

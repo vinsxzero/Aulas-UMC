@@ -1,15 +1,16 @@
 import { Request, Response } from "express";
+
 class ListSaleController{
     async handle(request:Request, response:Response){
-        const categories = [
+        const sales =[
             {
-                productId: "01",
-                clientID: "06",
-                userId:"03",
-                quantity:"26",
-                value:"100000000000"
+                productId: "",
+                clientId: "",
+                userId: "",
+                quantity:"",
+                value:""
             }
         ]
     }
 }
-export {ListSaleController}
+export{ListSaleController}
