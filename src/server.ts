@@ -1,7 +1,8 @@
 import express,{Request,Response,NextFunction} from "express";
 import { router } from "./routes";
 import "express-async-errors"
-
+import "reflect-metadata"
+import "./database/index"
 const app = express();
 app.use(express.json());
 app.use(router);
