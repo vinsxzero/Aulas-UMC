@@ -1,23 +1,21 @@
 import { Response, Request } from "express";
+import { CreateSaleService } from "../../service/sale/CreateSaleService";
+import { Sale } from "../../entities/sale";
 
 class CreateSaleController{
     async handle(request: Request, response: Response){
-        const{productId, clientId, userId, quantity, value} = request.body
-        console.log(productId)
-        console.log(clientId)
-        console.log(userId)
-        console.log(quantity)
-        console.log(value)
+        const{productId,userId, clientId, quantity, value} = request.body
 
         const sale = {
+            userId:userId,
             productId: productId,
-            clientId: clientId,
-            userId: userId,
+            clientID: clientId,
             quantity:quantity,
-            value:value
+            value:value,
         }
-
-        return response.json({message: "Registro incluído com sucesso!"})
+        const saleService = new CreateSaleService
+        const ret = await saleService.execute(sale)
+        return response.json(ret)
     }
 }
 export {CreateSaleController}

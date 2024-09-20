@@ -1,4 +1,7 @@
+import { getCustomRepository } from "typeorm"
 import {IClientRequest} from "../../interface/IClientRequest"
+import { ClientRepositories } from "../../repository/ClientRepositories"
+import { Product } from "../../entities/product"
 
 class CreateClientService{
     async execute({name, email, cpf, address, phone}:IClientRequest){
@@ -14,9 +17,15 @@ class CreateClientService{
         if (!phone){
             throw new Error("Este cliente não consta no banco de dados")
         }
-        var vclient = {
-            name:name, email: email, cpf: cpf, address:address, phone: phone
-        }
-        return {message: "Registro incluido com sucesso"}
+        const clientRepositories = getCustomRepository(ClientRepositories)
+        const client = clientRepositories.create({
+            name,
+            email,
+            cpf,
+            address,
+            phone
+        })
+        await clientRepositories.save(client)
+        return client
     }
 }

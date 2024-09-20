@@ -1,4 +1,6 @@
+import { getCustomRepository } from "typeorm"
 import {ISaleRequest} from "../../interface/ISaleRequest"
+import { SalesRepositories } from "../../repository/SaleRepositories"
 
 
 class CreateSaleService{
@@ -12,13 +14,16 @@ class CreateSaleService{
         if(!clientID){
             throw new Error("Nao foi possivel cadastrar")
         }
-        var vsale = {
-            productId: productId,
-            clientID: clientID,
-            userId:userId,
-            quantity:quantity,
-            value:value
-        }
-        return {message: "Deu certo"}
+        const saleRepositories = getCustomRepository(SalesRepositories)
+        const sale = saleRepositories.create({
+                userId,
+                productId,
+                clientID, 
+                quantity,
+                value
+        })
+        await saleRepositories.save(sale)
+        return sale
     }
 }
+export {CreateSaleService}

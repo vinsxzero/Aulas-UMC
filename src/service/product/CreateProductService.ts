@@ -1,4 +1,7 @@
+import { getCustomRepository } from "typeorm";
 import { IProductRequest } from "../../interface/IProductRequest";
+import { ProductRepositories } from "../../repository/ProductRepositories";
+import { SalesRepositories } from "../../repository/SaleRepositories";
 
 class CreateProductService{
     async execute({name, description, price, categoryId}:IProductRequest){
@@ -11,9 +14,16 @@ class CreateProductService{
         if (!categoryId){
             throw new Error("Não foi possível cadastrar")
         }
-        var vproduct = {
-            name:name, description:description, price:price, categoryId:categoryId
-        }
-        return {message:"Registro incluído com sucesso"}
+        
+        const productRepositories = getCustomRepository(ProductRepositories)
+        const prod = productRepositories.create({
+            name,
+            description,
+            price,
+            categoryId
+        })
+        await productRepositories.save(prod)
+        return prod
     }
 }
+export{CreateProductService}

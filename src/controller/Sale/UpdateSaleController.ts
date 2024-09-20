@@ -1,22 +1,21 @@
 import { Request, Response } from "express";
+import { UpdateSaleService } from "../../service/sale/UpdateSaleService";
 
 class UpdateSaleController{
     async handle(request:Request, response:Response){
         const {productId, clientID,userId,quantity,value} = request.body;
         const id = request.params.id
-        console.log(productId)
-        console.log(clientID)
-        console.log(userId)
-        console.log(quantity)
-        console.log(value)
-        const client = {
+
+        const sale = {
             productId: productId,
             clientID: clientID,
             userId:userId,
             quantity:quantity,
             value:value
         }
-        return response.json({message:"Atualizado com sucesso!"})
+        const saleService = new UpdateSaleService
+        const ret = await saleService.execute(sale)
+        return response.json(ret)
     }
 }
 export{UpdateSaleController}

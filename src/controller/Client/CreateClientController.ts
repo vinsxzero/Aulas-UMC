@@ -4,11 +4,7 @@ class CreateClientController{
     async handle(request: Request, response:Response){
         const {name, email, cpf, address, phone} = request.body;
         
-        console.log(name)
-        console.log(email)
-        console.log(cpf)
-        console.log(address)
-        console.log(phone)
+        
 
         const clients = {
         name: name,

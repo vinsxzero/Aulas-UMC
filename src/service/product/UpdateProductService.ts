@@ -1,8 +1,12 @@
+import { getCustomRepository } from "typeorm";
 import { IProductRequest } from "../../interface/IProductRequest";
+import { ProductRepositories } from "../../repository/ProductRepositories";
+import { isDate } from "util";
+import { userInfo } from "os";
 
 
-class UpdateProductRequest{
-    async execute({name, description, price, categoryId}:IProductRequest){
+class UpdateProductService{
+    async execute({id, name, description, price, categoryId}:IProductRequest){
 
         if (!name){
             throw new Error("Não foi possível cadastrar")
@@ -13,11 +17,18 @@ class UpdateProductRequest{
         if (!categoryId){
             throw new Error("Não foi possível cadastrar")
         }
-        var vproduct = {
-            name:name, description:description, price:price, categoryId:categoryId
+        const productRepositories = getCustomRepository(ProductRepositories)
+        const product = await productRepositories.findOne({id})
+        if (!id){
+         throw new Error("Este produto nao foi encontrado")
         }
-        return {message: "Registro editado com sucesso"}
+        product.name = name
+        product.description =  description
+        product.price = price
+        product.categoryId = categoryId
+        const ret = await productRepositories.update(id, product)
+        return ret
     }
 }
-export {UpdateProductRequest}
+export {UpdateProductService}
     

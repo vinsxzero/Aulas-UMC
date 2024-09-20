@@ -1,11 +1,9 @@
 import { Request, Response } from "express";
+import { CreateUserService } from "../../service/user/CreateUserService";
 class CreateUserController {
   async handle(request: Request, response: Response) {
     const { name, email, admin, password } = request.body;
-   console.log(name)
-   console.log(email)
-   console.log(admin)
-   console.log(password)   
+   
    const user = 
    {
       name:name,
@@ -13,7 +11,9 @@ class CreateUserController {
       admin:admin,
       password:password
     };    
-    return response.json({message:"Registro incluido com Sucesso"});
+    const userService = new CreateUserService
+    const ret = await userService.execute(user)
+    return response.json(ret);
   }
 }
 export { CreateUserController };

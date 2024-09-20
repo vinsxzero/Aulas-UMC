@@ -1,7 +1,7 @@
 interface IUserRequest{
-    id: string,
+    id?: string,
     name: string,
-    email: boolean,
+    email: string,
     admin?: boolean,
     password: string
 }

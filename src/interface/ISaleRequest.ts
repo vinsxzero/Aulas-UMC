@@ -1,9 +1,9 @@
 interface ISaleRequest{
-    id: string
+    id?: string,
+    userId:string
     productId: string,
     clientID: string,
     quantity:string,
-    value:string
-    userId:string,
+    value:string,
 }
 export{ISaleRequest}

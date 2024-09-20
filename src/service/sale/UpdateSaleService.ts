@@ -1,6 +1,10 @@
+import { getCustomRepository } from "typeorm"
 import { ISaleRequest } from "../../interface/ISaleRequest"
+import { SalesRepositories } from "../../repository/SaleRepositories"
+import { validate } from "uuid"
+
 class UpdateSaleService{
-    async execute({productId, clientID, userId, quantity, value}: ISaleRequest){
+    async execute({id, productId, clientID, userId, quantity, value}: ISaleRequest){
         if (!userId){
             throw new Error("Nao foi possível cadastrar")
         }
@@ -10,14 +14,19 @@ class UpdateSaleService{
         if(!clientID){
             throw new Error("Nao foi possivel cadastrar")
         }
-        var vsale = {
-            productId: productId,
-            clientID: clientID,
-            userId:userId,
-            quantity:quantity,
-            value:value
+        
+        const saleRepositories = getCustomRepository(SalesRepositories)
+        const sale = await saleRepositories.findOne({id})
+        if(!productId){
+            throw new Error("Esta venda nao existe")
         }
-        return {message: "Registro editado com sucesso"}
+        sale.productId = productId
+        sale.clientID = clientID
+        sale.userId = userId
+        sale.quantity = quantity
+        sale.value = value
+        const ret = saleRepositories.update(id, sale)
+        return ret
     }
 }
 export{ UpdateSaleService }
